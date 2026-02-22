@@ -1,3 +1,4 @@
+//gen prod id
 export function genProductId(){
     let lastId = localStorage.getItem("lastId");
     if(lastId===null){
@@ -9,7 +10,7 @@ export function genProductId(){
     localStorage.setItem("lastId",lastId);
     return lastId;
 }
-
+//convert image to base64
 export function convertToBase64(file){
     return new Promise((resolve,reject)=>{
         const reader = new FileReader();

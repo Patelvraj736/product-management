@@ -1,6 +1,7 @@
 import { fetchProducts, createProduct, updateProducts } from "./product.js";
 import { convertToBase64 } from "./utility.js";
 
+//dom ele
 const productList = document.getElementById("productList");
 const form = document.getElementById("productForm");
 const addBtn = document.getElementById("addProductBtn");
@@ -9,7 +10,7 @@ const productModal = new bootstrap.Modal(modalElement);
 const imageInput = document.getElementById("image");
 const imagePreview = document.getElementById("imagePreview");
 
-
+//display products
 function displayProducts(data) {
 
     const products = data || fetchProducts();
@@ -60,7 +61,7 @@ col.innerHTML = `
         productList.appendChild(col);
     });
 }
-
+//event listeners
 addBtn.addEventListener("click", () => {
     form.reset();
     document.getElementById("productId").value = "";

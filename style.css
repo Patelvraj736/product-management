@@ -1,42 +1,66 @@
 body {
     min-height: 100vh;
+    background-color: #f8f9fa;
 }
+
 .product-card {
-    border-radius: 14px;
-    transition: all 0.25s ease;
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
     overflow: hidden;
     background: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
 .product-img {
-    height: 220px;
-    object-fit: cover;
+    height: 170px; 
+    object-fit: fill;
 }
 
-.card-body {
-    padding: 1.25rem;
+.card-body small {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .card-title {
+    font-size: 1rem; 
     font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #212529;
+    text-transform: capitalize;
 }
 
 .card-text {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #6c757d;
+    line-height: 1.4;
+    margin-bottom: 0.7rem;
+    display: -webkit-box;
+    overflow: hidden;
+    text-transform: capitalize;
 }
+
+.fw-bold {
+    font-size: 1rem;
+    color: #198754;
+    font-weight: 600;
+}
+
+.btn-sm {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
 .modal-content {
     border-radius: 12px;
     border: none;
-}
-
-.modal-header {
-    border-bottom: 1px solid #eee;
 }
 
 .modal-title {

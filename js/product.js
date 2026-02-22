@@ -1,6 +1,7 @@
 import { genProductId, convertToBase64 } from "./utility.js";
 import { getProducts, saveProducts } from "./storage.js";
 
+//create product
 export async function createProduct(productData) {
     let products = getProducts();
     let imageBase64 = await convertToBase64(productData.image);
@@ -15,9 +16,11 @@ export async function createProduct(productData) {
     products.push(newProduct);
     saveProducts(products);
 }
+//fetch products
 export function fetchProducts() {
     return getProducts();
 }
+//update products
 export function updateProducts(products){
     saveProducts(products);
 }
