@@ -1,0 +1,44 @@
+body {
+    min-height: 100vh;
+}
+.product-card {
+    border-radius: 14px;
+    transition: all 0.25s ease;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.product-img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+.modal-content {
+    border-radius: 12px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+    font-weight: 600;
+}
