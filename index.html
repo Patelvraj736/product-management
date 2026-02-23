@@ -85,9 +85,12 @@
                             <input type="number"
                                 id="price"
                                 class="form-control"
-                                min="0"
-                                >
+                                min="0">
                         </div>
+                        <small id="priceError"
+                            class="text-danger d-none">
+                            Price must be between 1 and 1,00,00,000
+                        </small>
 
                         <div class="mb-3">
                             <label class="form-label">Description</label>
@@ -122,26 +125,50 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="viewModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Product Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center">
+    <div class="modal fade"
+        id="viewModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Product Details</h5>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
 
-                <img id="viewImage" class="img-fluid rounded mb-3" style="max-height:200px;">
+    <img id="viewImage"
+        class="img-fluid rounded mb-3"
+        style="max-height:200px;">
 
-                <h5 id="viewName"></h5>
-                <p class="text-muted" id="viewDescription"></p>
-                <h6 class="fw-bold" id="viewPrice"></h6>
-                <small class="text-muted" id="viewId"></small>
+    <div class="text-center mt-3">
 
+        <p class="mb-2">
+            <span class="fw-semibold">Product ID :</span>
+            <span id="viewId" class="text-muted"></span>
+        </p>
+
+        <p class="mb-2">
+            <span class="fw-semibold">Product Name :</span>
+            <span id="viewName"></span>
+        </p>
+
+        <p class="mb-2">
+            <span class="fw-semibold">Price :</span>
+            <span id="viewPrice" class="fw-bold text-success"></span>
+        </p>
+
+        <p class="mb-2">
+            <span class="fw-semibold">Description :</span>
+            <span id="viewDescription" class="text-muted"></span>
+        </p>
+
+    </div>
+
+</div>
             </div>
         </div>
     </div>
-</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

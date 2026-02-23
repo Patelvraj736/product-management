@@ -78,6 +78,7 @@ addBtn.addEventListener("click", () => {
     form.reset();
     document.getElementById("productId").value = "";
     document.querySelector(".modal-title").textContent = "Add Product";
+    imageInput.value = "";
     imagePreview.src = "";
     imagePreview.classList.add("d-none");
     charCount.textContent = "0";
@@ -154,7 +155,8 @@ productList.addEventListener("click", async (e) => {
     if (e.target.classList.contains("edit-btn")) {
 
         const product = products.find(p => p.productId === id);
-
+        form.reset();
+        imageInput.value = "";
         document.getElementById("productId").value = product.productId;
         document.getElementById("productName").value = product.productName;
         document.getElementById("price").value = product.price;
@@ -178,18 +180,16 @@ productList.addEventListener("click", async (e) => {
     }
     if (e.target.classList.contains("view-btn")) {
 
-        const product = products.find(p => p.productId === id);
+    const product = products.find(p => p.productId === id);
 
-        document.getElementById("viewImage").src = product.image;
-        document.getElementById("viewName").textContent = product.productName;
-        document.getElementById("viewName").style.textTransform = "capitalize";
-        document.getElementById("viewDescription").textContent = product.description;
-        document.getElementById("viewDescription").style.textTransform = "capitalize";
-        document.getElementById("viewPrice").textContent = "₹ " + product.price;
-        document.getElementById("viewId").textContent = "ID: " + product.productId;
+    document.getElementById("viewImage").src = product.image;
+    document.getElementById("viewId").textContent = product.productId;
+    document.getElementById("viewName").textContent = product.productName;
+    document.getElementById("viewPrice").textContent = product.price;
+    document.getElementById("viewDescription").textContent = product.description;
 
-        viewModal.show();
-    }
+    viewModal.show();
+}
 });
 
 form.addEventListener("submit", async (e) => {
@@ -202,6 +202,12 @@ form.addEventListener("submit", async (e) => {
     const imageFile = document.getElementById("image").files[0];
     const maxSize = 300 * 1024;
 
+    const numericPrice = Number(price);
+
+    if (numericPrice > 10000000) {
+        alert("Enter valid price between 1 and 1,00,00,000");
+        return;
+    }
     if (imageFile) {
 
         const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
@@ -264,9 +270,22 @@ form.addEventListener("submit", async (e) => {
 
 const priceInput = document.getElementById("price");
 
+const limit = 10000000;
+
 priceInput.addEventListener("keydown", function (e) {
     if (["e", "E", "+", "-"].includes(e.key)) {
         e.preventDefault();
+    }
+    let value = this.value;
+    value = value.replace(/[^0-9.]/g, "");
+    if ((value.match(/\./g) || []).length > 1) {
+        value = value.slice(0, -1);
+    }
+    let numericValue = Number(value);
+    if (numericValue > limit) {
+        this.value = limit;
+    } else {
+        this.value = value;
     }
 });
 applyFilterSort();
