@@ -9,6 +9,15 @@ const modalElement = document.getElementById("productModal");
 const productModal = new bootstrap.Modal(modalElement);
 const imageInput = document.getElementById("image");
 const imagePreview = document.getElementById("imagePreview");
+const descriptionInput = document.getElementById("description");
+const charCount = document.getElementById("charCount");
+const viewModalElement = document.getElementById("viewModal");
+const viewModal = new bootstrap.Modal(viewModalElement);
+
+descriptionInput.addEventListener("input", () => {
+    const currentLength = descriptionInput.value.length;
+    charCount.textContent = currentLength;
+});
 
 //display products
 function displayProducts(data) {
@@ -26,7 +35,7 @@ function displayProducts(data) {
         const col = document.createElement("div");
         col.className = "col-md-4";
 
-col.innerHTML = `
+        col.innerHTML = `
     <div class="card shadow-sm product-card h-100">
         <img src="${product.image}" class="card-img-top product-img">
         <div class="card-body d-flex flex-column">
@@ -48,13 +57,16 @@ col.innerHTML = `
             </p>
 
             <div class="d-flex justify-content-between mt-3">
-                <button class="btn btn-outline-secondary btn-sm edit-btn" data-id="${product.productId}">
-                    Edit
-                </button>
-                <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${product.productId}">
-                    Delete
-                </button>
-            </div>
+    <button class="btn btn-outline-primary btn-sm view-btn" data-id="${product.productId}">
+        View
+    </button>
+    <button class="btn btn-outline-secondary btn-sm edit-btn" data-id="${product.productId}">
+        Edit
+    </button>
+    <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${product.productId}">
+        Delete
+    </button>
+</div>
         </div>
     </div>
 `;
@@ -68,6 +80,7 @@ addBtn.addEventListener("click", () => {
     document.querySelector(".modal-title").textContent = "Add Product";
     imagePreview.src = "";
     imagePreview.classList.add("d-none");
+    charCount.textContent = "0";
     productModal.show();
 });
 imageInput.addEventListener("change", () => {
@@ -94,10 +107,12 @@ function applyFilterSort() {
 
     let products = fetchProducts();
 
-    const filterValue = filterInput.value;
+    const filterValue = filterInput.value.trim();
 
     if (filterValue) {
-        products = products.filter(p => p.productId === Number(filterValue));
+        products = products.filter(p =>
+            p.productId.toString().includes(filterValue)
+        );
     }
 
     const sortValue = sortSelect.value;
@@ -145,6 +160,7 @@ productList.addEventListener("click", async (e) => {
         document.getElementById("price").value = product.price;
         document.getElementById("description").value = product.description;
         imagePreview.src = product.image;
+        charCount.innerHTML = product.description.length;
         imagePreview.classList.remove("d-none");
         document.querySelector(".modal-title").textContent = "Edit Product";
         productModal.show();
@@ -160,6 +176,20 @@ productList.addEventListener("click", async (e) => {
         updateProducts(filtered);
         applyFilterSort();
     }
+    if (e.target.classList.contains("view-btn")) {
+
+        const product = products.find(p => p.productId === id);
+
+        document.getElementById("viewImage").src = product.image;
+        document.getElementById("viewName").textContent = product.productName;
+        document.getElementById("viewName").style.textTransform = "capitalize";
+        document.getElementById("viewDescription").textContent = product.description;
+        document.getElementById("viewDescription").style.textTransform = "capitalize";
+        document.getElementById("viewPrice").textContent = "₹ " + product.price;
+        document.getElementById("viewId").textContent = "ID: " + product.productId;
+
+        viewModal.show();
+    }
 });
 
 form.addEventListener("submit", async (e) => {
@@ -172,9 +202,19 @@ form.addEventListener("submit", async (e) => {
     const imageFile = document.getElementById("image").files[0];
     const maxSize = 300 * 1024;
 
-    if (imageFile && imageFile.size > maxSize) {
-        alert("Image size must be less than 300 KB");
-        return;
+    if (imageFile) {
+
+        const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+
+        if (!allowedTypes.includes(imageFile.type)) {
+            alert("Only images are allowed");
+            return;
+        }
+
+        if (imageFile.size > maxSize) {
+            alert("Image size must be less than 300 KB");
+            return;
+        }
     }
 
     if (!productName || !price || !description) {
@@ -222,4 +262,11 @@ form.addEventListener("submit", async (e) => {
     applyFilterSort();
 });
 
+const priceInput = document.getElementById("price");
+
+priceInput.addEventListener("keydown", function (e) {
+    if (["e", "E", "+", "-"].includes(e.key)) {
+        e.preventDefault();
+    }
+});
 applyFilterSort();
